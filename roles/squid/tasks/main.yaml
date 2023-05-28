@@ -1,0 +1,9 @@
+- yum: name=squid
+- template: src=squid.conf.j2 dest=/etc/squid/squid.conf
+- systemd: name=squid state=restarted enabled=yes
+- firewalld: service=squid state=enabled
+
+#ssh -n root@$hostname dnf install squid httpd-tools -y
+#
+#ssh root@$hostname firewall-cmd --zone=public --add-service=squid --permanent 
+#ssh root@$hostname firewall-cmd --reload

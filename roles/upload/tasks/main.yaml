@@ -1,0 +1,7 @@
+---
+- copy: src={{ playbook_dir }}/{{ rhcos_initramfs }} dest=/usr/share/nginx/html/.
+- copy: src={{ playbook_dir }}/{{ rhcos_kernel }} dest=/usr/share/nginx/html/.
+- copy: src={{ playbook_dir }}/{{ rhcos_rootfs }} dest=/usr/share/nginx/html/.
+- copy: src={{ playbook_dir }}/{{ oc }} dest=/usr/share/nginx/html/.
+- copy: src={{ playbook_dir }}/{{ installer }} dest=/usr/share/nginx/html/.
+- copy: src={{ playbook_dir }}/{{ butane }} dest=/usr/share/nginx/html/{{ butane }}

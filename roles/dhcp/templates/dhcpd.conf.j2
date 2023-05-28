@@ -1,0 +1,98 @@
+#
+# DHCP Server Configuration file.
+#   see /usr/share/doc/dhcp-server/dhcpd.conf.example
+#   see dhcpd.conf(5) man page
+#
+
+#######################################################
+# 共通設定
+#######################################################
+
+default-lease-time 86400;          # 24h
+max-lease-time 172800;             # 48h
+authoritative;
+
+
+### Add for iPXE - start ###
+
+option space ipxe;
+option arch code 93 = unsigned integer 16; # RFC4578
+
+### Add for iPXE - end ###
+
+
+#######################################################
+# OCPクラスタ用ネットワーク DHCP/サブネット設定、iPXE設定
+#######################################################
+
+subnet 172.16.100.0 netmask 255.255.255.0 {
+
+  range 172.16.100.13 172.16.100.26;
+
+  option domain-name "{{ cluster }}.{{ domain }}";
+  option domain-name-servers {{ bastion_node01_ens192_ip4 }};
+  option subnet-mask 255.255.255.0;
+  option routers {{ bastion_node01_ens192_ip4 }};
+  option broadcast-address 172.16.100.255;
+
+  ### iPXE Boot  -  start ###
+
+  class "pxeclients" {
+      match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
+      next-server {{ bastion_node01_ens192_ip4 }};  # TFTP Server address
+
+      if option arch != 00:00 { # UEFI
+
+            # 1st time, tell iPXE image place as boot file on TFTP server.
+            # 2nd time, tell iPXE script place on HTTP server.
+
+            if exists user-class and option user-class = "iPXE" { #  the 2nd time. Go to HTTP Server to get iPXE script
+                filename "http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/pxeboot.ipxe";
+            } else {  # the 1st time. Go to TFTP to get iPXE.
+                filename "ipxe.efi";
+            }
+
+      } else {  # BIOS machines ( There are no VM with BIOS in this test envivronment.)
+        filename "undionly.kpxe";
+      }
+  }
+
+  ### iPXE Boot - end ###
+
+}
+
+#######################################################
+# OCPクラスタ用ネットワーク DHCP/IPアドレス設定 (ens192)
+#######################################################
+
+host {{ bootstrap_node01 }}-nic1 { hardware ethernet 00:50:56:90:4f:92; fixed-address {{ bootstrap_node01_ens192_ip4 }}; option host-name "{{ bootstrap_node01 }}"; }
+host {{ master_node01 }}-nic1 { hardware ethernet 00:50:56:01:10:14; fixed-address {{ master_node01_ens192_ip4 }}; option host-name "{{ master_node01 }}"; }
+host {{ master_node02 }}-nic1 { hardware ethernet 00:50:56:01:10:15; fixed-address {{ master_node02_ens192_ip4 }}; option host-name "{{ master_node02 }}"; }
+host {{ master_node03 }}-nic1 { hardware ethernet 00:50:56:01:10:16; fixed-address {{ master_node03_ens192_ip4 }}; option host-name "{{ master_node03 }}"; }
+host {{ worker_node01 }}-nic1 { hardware ethernet 00:50:56:01:10:23; fixed-address {{ worker_node01_ens192_ip4 }}; option host-name "{{ worker_node01 }}"; }
+host {{ worker_node02 }}-nic1 { hardware ethernet 00:50:56:01:10:24; fixed-address {{ worker_node02_ens192_ip4 }}; option host-name "{{ worker_node02 }}"; }
+host {{ worker_node03 }}-nic1 { hardware ethernet 00:50:56:01:10:25; fixed-address {{ worker_node03_ens192_ip4 }}; option host-name "{{ worker_node03 }}"; }
+
+#######################################################
+# サービスA用ネットワーク DHCP/サブネット設定
+#######################################################
+
+subnet 192.168.100.0 netmask 255.255.255.0 {
+
+  range 192.168.100.13 192.168.100.26;
+  option subnet-mask 255.255.255.0;
+  option broadcast-address 192.168.100.255;
+
+}
+
+#######################################################
+# サービスA用ネットワーク DHCP/IPアドレス設定 (ens224)
+#######################################################
+
+host {{ bootstrap_node01 }}-nic2 { hardware ethernet 00:50:56:90:3c:50; fixed-address {{ bootstrap_node01_ens224_ip4 }}; option host-name "{{ bootstrap_node01 }}1a"; }
+host {{ master_node01 }}-nic2 { hardware ethernet 00:50:56:01:20:14; fixed-address {{ master_node01_ens224_ip4 }}; option host-name "{{ master_node01 }}a"; }
+host {{ master_node02 }}-nic2 { hardware ethernet 00:50:56:01:20:15; fixed-address {{ master_node02_ens224_ip4 }}; option host-name "{{ master_node02 }}a"; }
+host {{ master_node03 }}-nic2 { hardware ethernet 00:50:56:01:20:16; fixed-address {{ master_node03_ens224_ip4 }}; option host-name "{{ master_node03 }}a"; }
+host {{ worker_node01 }}-nic2 { hardware ethernet 00:50:56:01:20:23; fixed-address {{ worker_node01_ens224_ip4 }}; option host-name "{{ worker_node01 }}a"; }
+host {{ worker_node02 }}-nic2 { hardware ethernet 00:50:56:01:20:24; fixed-address {{ worker_node02_ens224_ip4 }}; option host-name "{{ worker_node02 }}a"; }
+host {{ worker_node03 }}-nic2 { hardware ethernet 00:50:56:01:20:25; fixed-address {{ worker_node03_ens224_ip4 }}; option host-name "{{ worker_node03 }}a"; }

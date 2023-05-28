@@ -1,0 +1,10 @@
+[{{ os_dist }}{{ os_version }}_BaseOS]
+name={{ os_dist }}{{ os_version }}_BaseOS
+baseurl=file:///media/BaseOS
+gpgcheck=0
+enabled=1
+[{{ os_dist }}{{ os_version }}_AppStream]
+name={{ os_dist }}{{ os_version }}_AppStream
+baseurl=file:///media/AppStream
+gpgcheck=0
+enabled=1

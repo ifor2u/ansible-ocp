@@ -1,0 +1,6 @@
+---
+- debug: msg={{ os_dist }}
+- debug: msg={{ os_version }}
+
+- mount: name=/media src=/root/{{ os_iso }} state=mounted opts=ro fstype=iso9660
+- template: src=rhel.repo.j2 dest=/etc/yum.repos.d/rhel.repo

@@ -1,0 +1,3 @@
+---
+- systemd: name=firewalld state=started
+- shell: firewall-cmd --set-log-denied=all

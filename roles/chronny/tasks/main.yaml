@@ -1,0 +1,13 @@
+---
+
+# timedatectl set-timezone Asia/Tokyo
+#scp -p chrony.conf root@$hostname:/etc/.
+#ssh -n root@$hostname systemctl restart chronyd
+#sleep 4
+#ssh -n root@$hostname chronyc sources
+#ssh -n root@$hostname timedatectl
+#
+#ssh -n root@$hostname firewall-cmd --get-zone-of-interface=ens192
+#ssh -n root@$hostname firewall-cmd --get-zone-of-interface=ens224
+#ssh -n root@$hostname firewall-cmd --permanent --zone=public --add-service=ntp
+#ssh -n root@$hostname firewall-cmd --reload

@@ -1,0 +1,7 @@
+---
+- yum: name=haproxy
+- template: src=haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+- name: "setsebool"
+  shell: setsebool -P haproxy_connect_any on
+- service: name=haproxy enabled=yes state=restarted
+

@@ -1,0 +1,24 @@
+# file: chrony.bu
+
+variant: openshift
+metadata:
+  name: chrony
+  labels:
+    machineconfiguration.openshift.io/role: bootstrap
+version: 4.11.0
+ignition:
+  config:
+    merge:
+    - source: http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}//bootstrap_base.ign
+storage:
+  files:
+    - path: /etc/chrony.conf
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: |
+          pool {{ inventory_hostname }}.{{ cluster }}.{{ domain }} iburst
+          driftfile /var/lib/chrony/drift
+          makestep 1.0 3
+          rtcsync
+          logdir /var/log/chrony

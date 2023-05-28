@@ -1,0 +1,42 @@
+---
+- name: "{{ rhcos_initramfs }}"
+  stat: path={{ playbook_dir }}/{{ rhcos_initramfs }}
+  register: stat1
+- shell: scp {{ nfs }}/{{ rhcos_initramfs }} {{ playbook_dir }}/.
+  when: not stat1.stat.exists
+        or stat1.stat.checksum != rhcos_initramfs_sha1sum
+
+- name: "{{ rhcos_rootfs }}"
+  stat: path={{ playbook_dir }}/{{ rhcos_rootfs }}
+  register: stat1
+- shell: scp {{ nfs }}/{{ rhcos_rootfs }} {{ playbook_dir }}/.
+  when: not stat1.stat.exists
+        or stat1.stat.checksum != rhcos_rootfs_sha1sum
+
+- name: "{{ rhcos_kernel }}"
+  stat: path={{ playbook_dir }}/{{ rhcos_kernel }}
+  register: stat1
+- shell: scp {{ nfs }}/{{ rhcos_kernel }} {{ playbook_dir }}/.
+  when: not stat1.stat.exists
+        or stat1.stat.checksum != rhcos_kernel_sha1sum
+
+- name: "{{ oc }}"
+  stat: path={{ playbook_dir }}/{{ oc }}
+  register: stat1
+- shell: scp {{ nfs }}/{{ oc }} {{ playbook_dir }}/.
+  when: not stat1.stat.exists
+        or stat1.stat.checksum != oc_sha1sum
+
+- name: "{{ installer }}"
+  stat: path={{ playbook_dir }}/{{ installer }}
+  register: stat1
+- shell: scp {{ nfs }}/{{ installer }} {{ playbook_dir }}/.
+  when: not stat1.stat.exists
+        or stat1.stat.checksum != installer_sha1sum
+
+- name: "{{ butane }}"
+  stat: path={{ playbook_dir }}/{{ butane }}
+  register: stat1
+- shell: scp {{ nfs }}/{{ butane }} {{ playbook_dir }}/.
+  when: not stat1.stat.exists
+        or stat1.stat.checksum != butane_sha1sum

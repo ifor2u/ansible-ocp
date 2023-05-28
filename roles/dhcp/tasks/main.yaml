@@ -1,0 +1,27 @@
+---
+- yum: name=dhcp-server
+- template: src=dhcpd.conf.j2 dest=/etc/dhcp/dhcpd.conf
+- template: src=dhcpd.j2 dest=/etc/sysconfig/dhcpd
+- service: name=dhcpd state=restarted
+
+#scp -p dhcpd.resolv.conf root@$hostname:/etc/.
+#
+#ssh root@$hostname dhcpd -t
+#
+#ssh root@$hostname systemctl status dhcpd
+#ssh root@$hostname systemctl enable dhcpd
+#ssh root@$hostname systemctl start dhcpd
+#ssh root@$hostname systemctl status dhcpd
+#
+#ssh root@$hostname firewall-cmd --get-zone-of-interface=ens192
+#ssh root@$hostname firewall-cmd --get-zone-of-interface=ens224
+#ssh root@$hostname firewall-cmd --permanent --zone=public --add-service=dhcp
+#ssh root@$hostname firewall-cmd --reload
+#
+#ssh root@$hostname firewall-cmd --list-services --zone=public
+#ssh root@$hostname firewall-cmd --list-all --zone=public
+#
+##ssh root@$hostname ll /var/lib/dhcp
+#ssh root@$hostname cat /var/lib/dhcpd/dhcpd.leases
+#
+#ssh root@$hostname ifup ens224

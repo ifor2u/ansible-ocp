@@ -1,0 +1,28 @@
+apiVersion: v1
+baseDomain: {{ cluster }}.{{ domain }}
+proxy:
+  httpProxy: http://{{ proxy_user }}:{{ proxy_pass }}@{{ bastion_node01 }}.{{ cluster }}.{{ domain }}:3128
+  httpsProxy: http://{{ proxy_user }}:{{ proxy_pass }}@{{ bastion_node01 }}.{{ cluster }}.{{ domain }}:3128
+  noProxy: {{ cluster }}.{{ domain }},172.16.100.0/24,192.168.100.0/24
+compute:
+- hyperthreading: Enabled
+  name: worker
+  replicas: 0
+controlPlane:
+  hyperthreading: Enabled
+  name: master
+  replicas: 3
+metadata:
+  name: {{ cluster }}
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  networkType: OpenShiftSDN
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  none: {}
+fips: false
+pullSecret: '{{ pullSecret }}'
+sshKey: '{{ sshKey }}'

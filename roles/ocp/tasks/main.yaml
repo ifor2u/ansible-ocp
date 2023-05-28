@@ -1,0 +1,57 @@
+---
+- stat: path=/usr/local/bin/oc
+  register: stat1
+- unarchive: src=/usr/share/nginx/html/{{ oc }} dest=/usr/local/bin remote_src=yes
+  when: not stat1.stat.exists
+
+- stat: path=/usr/local/bin/openshift-install
+  register: stat1
+- unarchive: src=/usr/share/nginx/html/{{ installer }} dest=/usr/local/bin remote_src=yes
+  when: not stat1.stat.exists
+
+- openssh_keypair: path=/root/.ssh/id_ed25519 force=false
+- file: path=/root/work state=directory
+- file: path=/root/work/openshift state=directory
+- template: src=install-config.yaml.j2 dest=/tmp/install-config.yaml
+- template: src=install-config.yaml.j2 dest=/root/work/openshift/install-config.yaml
+- shell: openshift-install create manifests --dir /root/work/openshift
+- file: path=/root/work/manifest state=directory
+- file: path=/root/work/manifest/chrony state=directory
+
+- name: "99-master-chrony.bu.j2"
+  template: src=99-master-chrony.bu.j2 dest=/root/work/manifest/chrony/99-master-chrony.bu
+
+- name: "99-worker-chrony.bu.j2"
+  template: src=99-worker-chrony.bu.j2 dest=/root/work/manifest/chrony/99-worker-chrony.bu
+
+- name: "chrony.bu.j2"
+  template: src=chrony.bu.j2 dest=/root/work/manifest/chrony/chrony.bu
+
+- copy: src=/usr/share/nginx/html/{{ butane }} dest=/usr/local/bin/butane remote_src=yes mode=0755
+
+- name: "butane 99-worker-chrony.bu"
+  shell: butane /root/work/manifest/chrony/99-worker-chrony.bu -o /root/work/manifest/chrony/99-worker-chrony.yaml
+
+- name: "butane 99-master-chrony.bu"
+  shell: butane /root/work/manifest/chrony/99-master-chrony.bu -o /root/work/manifest/chrony/99-master-chrony.yaml
+
+- name: "butane chrony.bu."
+  shell: butane -r /root/work/manifest/chrony/chrony.bu -o /root/work/manifest/chrony/bootstrap_intermediate.yaml
+
+- name: "openshift-install ignition-config"
+  shell: openshift-install create ignition-configs --dir /root/work/openshift
+
+- name: "copy master.ign"
+  copy: src=/root/work/openshift/master.ign dest=/usr/share/nginx/html/master.ign remote_src=yes
+
+- name: "copy worker.ign"
+  copy: src=/root/work/openshift/worker.ign dest=/usr/share/nginx/html/worker.ign remote_src=yes
+
+- name: "copy bootstrap_base.ign"
+  copy: src=/root/work/openshift/bootstrap.ign dest=/usr/share/nginx/html/bootstrap_base.ign remote_src=yes
+
+- name: "copy bootstrap.ign"
+  copy: src=/root/work/manifest/chrony/bootstrap_intermediate.yaml dest=/usr/share/nginx/html/bootstrap.ign remote_src=yes
+
+#ssh root@$hostname dnf install bash-completion -y
+#ssh root@$hostname 'oc completion bash > /etc/bash_completion.d/oc_bash_completion'

@@ -1,0 +1,6 @@
+---
+- yum: name=dnsmasq
+- template: src=dnsmasq-ocp.conf.j2 dest=/etc/dnsmasq.d/dnsmasq-ocp.conf
+- copy: src=dnsmasq.conf dest=/etc/dnsmasq.conf
+- firewalld: permanent=yes immediate=yes service=dns state=enabled
+- service: name=dnsmasq enabled=true state=restarted

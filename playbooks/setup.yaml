@@ -1,0 +1,15 @@
+---
+- hosts: bastion
+  gather_facts: no
+  roles:
+#    - roles/test
+    - roles/os
+    - roles/firewalld
+    - roles/yum
+#    - roles/squid
+    - roles/dhcp
+    - roles/tftp
+    - roles/nginx
+    - roles/dnsmasq
+    - roles/haproxy
+    - roles/ocp
