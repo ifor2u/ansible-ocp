@@ -24,24 +24,24 @@ goto ${selected}
 # For bootstrap
 ####################################
 :bootstrap
-kernel http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/{{ rhcos_kernel }} initrd=main coreos.live.rootfs_url=http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/{{ rhcos_rootfs }} coreos.inst.install_dev=/dev/sda coreos.inst.ignition_url=http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/bootstrap.ign
-initrd --name main http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/{{ rhcos_initramfs }}
+kernel http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}/{{ rhcos_kernel }} initrd=main coreos.live.rootfs_url=http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}/{{ rhcos_rootfs }} coreos.inst.install_dev=/dev/sda coreos.inst.ignition_url=http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}/bootstrap.ign
+initrd --name main http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}/{{ rhcos_initramfs }}
 boot
 
 ####################################
 # For master
 ####################################
 :master
-kernel http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/{{ rhcos_kernel }} initrd=main coreos.live.rootfs_url=http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/{{ rhcos_rootfs }} coreos.inst.install_dev=/dev/sda coreos.inst.ignition_url=http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/master.ign
-initrd --name main http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/{{ rhcos_initramfs }}
+kernel http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}/{{ rhcos_kernel }} initrd=main coreos.live.rootfs_url=http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}/{{ rhcos_rootfs }} coreos.inst.install_dev=/dev/sda coreos.inst.ignition_url=http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}/master.ign
+initrd --name main http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}/{{ rhcos_initramfs }}
 boot
 
 ####################################
 # For worker
 ####################################
 :worker
-kernel http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/{{ rhcos_kernel }} initrd=main coreos.live.rootfs_url=http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/{{ rhcos_rootfs }} coreos.inst.install_dev=/dev/sda coreos.inst.ignition_url=http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/worker.ign
-initrd --name main http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}/{{ rhcos_initramfs }}
+kernel http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}/{{ rhcos_kernel }} initrd=main coreos.live.rootfs_url=http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}/{{ rhcos_rootfs }} coreos.inst.install_dev=/dev/sda coreos.inst.ignition_url=http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}/worker.ign
+initrd --name main http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}/{{ rhcos_initramfs }}
 boot
 
 :exit

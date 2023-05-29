@@ -2,26 +2,26 @@
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
 # OCP - Kubernetes API
-{{ bastion_node01_ens192_ip4 }}    api
-{{ bastion_node01_ens192_ip4 }}    api-int
+{{ bastion_node01_nic1_ip4 }}    api
+{{ bastion_node01_nic1_ip4 }}    api-int
 
 ## OCP - nodes
-{{ bastion_node01_ens192_ip4 }}    {{ bastion_node01 }}
-{{ bootstrap_node01_ens192_ip4 }}    {{ bootstrap_node01 }}
-{{ master_node01_ens192_ip4 }}    {{ master_node01 }}
-{{ master_node02_ens192_ip4 }}    {{ master_node02 }}
-{{ master_node03_ens192_ip4 }}    {{ master_node03 }}
-{{ worker_node01_ens192_ip4 }}    {{ worker_node01 }}
-{{ worker_node02_ens192_ip4 }}    {{ worker_node02 }}
-{{ worker_node03_ens192_ip4 }}    {{ worker_node03 }}
+{{ bastion_node01_nic1_ip4 }}    {{ bastion_node01 }}
+{{ bootstrap_node01_nic1_ip4 }}    {{ bootstrap_node01 }}
+{{ master_node01_nic1_ip4 }}    {{ master_node01 }}
+{{ master_node02_nic1_ip4 }}    {{ master_node02 }}
+{{ master_node03_nic1_ip4 }}    {{ master_node03 }}
+{{ worker_node01_nic1_ip4 }}    {{ worker_node01 }}
+{{ worker_node02_nic1_ip4 }}    {{ worker_node02 }}
+{{ worker_node03_nic1_ip4 }}    {{ worker_node03 }}
 
 ## OCP - nodes (Service A)
 
-{{ bastion_node01_ens224_ip4 }}    {{ bastion_node01 }}a
-{{ bootstrap_node01_ens224_ip4 }}    {{ bootstrap_node01 }}a
-{{ master_node01_ens224_ip4 }}    {{ master_node01 }}a
-{{ master_node02_ens224_ip4 }}    {{ master_node02 }}a
-{{ master_node03_ens224_ip4 }}    {{ master_node03 }}a
-{{ worker_node01_ens224_ip4 }}    {{ worker_node01 }}a
-{{ worker_node02_ens224_ip4 }1    {{ worker_node02 }}a
-{{ worker_node03_ens224_ip4 }}    {{ worker_node03 }}a
+{{ bastion_node01_nic2_ip4 }}    {{ bastion_node01 }}a
+{{ bootstrap_node01_nic2_ip4 }}    {{ bootstrap_node01 }}a
+{{ master_node01_nic2_ip4 }}    {{ master_node01 }}a
+{{ master_node02_nic2_ip4 }}    {{ master_node02 }}a
+{{ master_node03_nic2_ip4 }}    {{ master_node03 }}a
+{{ worker_node01_nic2_ip4 }}    {{ worker_node01 }}a
+{{ worker_node02_nic2_ip4 }}    {{ worker_node02 }}a
+{{ worker_node03_nic2_ip4 }}    {{ worker_node03 }}a

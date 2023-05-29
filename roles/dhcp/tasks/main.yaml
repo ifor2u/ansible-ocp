@@ -13,8 +13,6 @@
 #ssh root@$hostname systemctl start dhcpd
 #ssh root@$hostname systemctl status dhcpd
 #
-#ssh root@$hostname firewall-cmd --get-zone-of-interface=ens192
-#ssh root@$hostname firewall-cmd --get-zone-of-interface=ens224
 #ssh root@$hostname firewall-cmd --permanent --zone=public --add-service=dhcp
 #ssh root@$hostname firewall-cmd --reload
 #

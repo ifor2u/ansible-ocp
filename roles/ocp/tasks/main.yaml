@@ -9,7 +9,6 @@
 - unarchive: src=/usr/share/nginx/html/{{ installer }} dest=/usr/local/bin remote_src=yes
   when: not stat1.stat.exists
 
-- openssh_keypair: path=/root/.ssh/id_ed25519 force=false
 - file: path=/root/work state=directory
 - file: path=/root/work/openshift state=directory
 - template: src=install-config.yaml.j2 dest=/tmp/install-config.yaml

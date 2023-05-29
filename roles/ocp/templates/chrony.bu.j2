@@ -9,7 +9,7 @@ version: 4.11.0
 ignition:
   config:
     merge:
-    - source: http://{{ bastion_node01_ens192_ip4 }}:{{ nginx_port }}//bootstrap_base.ign
+    - source: http://{{ bastion_node01_nic1_ip4 }}:{{ nginx_port }}//bootstrap_base.ign
 storage:
   files:
     - path: /etc/chrony.conf

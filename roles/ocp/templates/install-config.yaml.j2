@@ -1,5 +1,5 @@
 apiVersion: v1
-baseDomain: {{ cluster }}.{{ domain }}
+baseDomain: {{ domain }}
 proxy:
   httpProxy: http://{{ proxy_user }}:{{ proxy_pass }}@{{ bastion_node01 }}.{{ cluster }}.{{ domain }}:3128
   httpsProxy: http://{{ proxy_user }}:{{ proxy_pass }}@{{ bastion_node01 }}.{{ cluster }}.{{ domain }}:3128

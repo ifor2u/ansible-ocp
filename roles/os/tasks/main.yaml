@@ -5,14 +5,16 @@
 - name: "copy hosts"
   template: src=hosts.j2 dest=/etc/hosts
 
-- name: "ens192"
-  nmcli: conn_name=ens192 ip4={{ bastion_node01_ens192_ip4 }}/24 dns4={{ bastion_node01_ens192_dns4 }} dns4_ignore_auto=yes state=present method4=manual autoconnect=true
-- shell: nmcli c mod ens192 ipv4.dns-priority 10
+- name: "{{ nic1 }}"
+  nmcli: conn_name={{ nic1 }} ip4={{ bastion_node01_nic1_ip4 }}/24 dns4={{ bastion_node01_nic1_dns4 }} dns4_ignore_auto=yes state=present method4=manual autoconnect=true
+- shell: nmcli c mod {{ nic1 }} ipv4.dns-priority 10
 
-- name: "ens224"
-  nmcli: conn_name=ens224 ip4={{ bastion_node01_ens224_ip4 }}/24 dns4={{ bastion_node01_ens224_dns4 }} dns4_ignore_auto=yes state=present method4=manual autoconnect=true
-- shell: nmcli c mod ens224 ipv4.dns-priority 30
+- name: "{{ nic2 }}"
+  nmcli: conn_name={{ nic2 }} ip4={{ bastion_node01_nic2_ip4 }}/24 dns4={{ bastion_node01_nic2_dns4 }} dns4_ignore_auto=yes state=present method4=manual autoconnect=true
+- shell: nmcli c mod {{ nic2 }} ipv4.dns-priority 30
 
-- name: "ens256"
-  nmcli: conn_name=ens256 ip4={{ bastion_node01_ens256_ip4 }}/24 dns4={{ bastion_node01_ens256_dns4 }} dns4_ignore_auto=yes state=present method4=manual autoconnect=true gw4=192.168.11.1
-- shell: nmcli c mod ens256 ipv4.dns-priority 30
+- name: "{{ nic3 }}"
+  nmcli: conn_name={{ nic3 }} ip4={{ bastion_node01_nic3_ip4 }}/24 dns4={{ bastion_node01_nic3_dns4 }} dns4_ignore_auto=yes state=present method4=manual autoconnect=true gw4=192.168.11.1
+- shell: nmcli c mod {{ nic3 }} ipv4.dns-priority 30
+
+- openssh_keypair: path=/root/.ssh/id_ed25519 force=false type=ed25519

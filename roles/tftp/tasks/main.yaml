@@ -1,6 +1,6 @@
 - yum: name=tftp
 - yum: name=tftp-server
-- service: name=tftp enabled=yes
+- service: name=tftp enabled=yes state=started
 
 #ssh root@$hostname systemctl enable tftp
 #ssh root@$hostname systemctl is-enabled tftp.socket
@@ -12,5 +12,5 @@
 
 - template: src=pxeboot.ipxe.j2 dest=/usr/share/nginx/html/pxeboot.ipxe
 
-- get_url: url=http://boot.ipxe.org/ipxe.efi dest=/var/lib/tftpboot/ipxe.efi checksum=sha256:61e44695a4a0a3ceefe79160fda66a3f415cf440455a6f3bb326ff93216e88ad
-- get_url: url=http://boot.ipxe.org/undionly.kpxe dest=/var/lib/tftpboot/undionly.kpxe checksum=sha256:a07d50b24b9dd50c64001e8125d9ab74df5be423912158a1fbccce9d57671a25
+#- get_url: url=http://boot.ipxe.org/ipxe.efi dest=/var/lib/tftpboot/ipxe.efi checksum=sha256:61e44695a4a0a3ceefe79160fda66a3f415cf440455a6f3bb326ff93216e88ad
+#- get_url: url=http://boot.ipxe.org/undionly.kpxe dest=/var/lib/tftpboot/undionly.kpxe checksum=sha256:a07d50b24b9dd50c64001e8125d9ab74df5be423912158a1fbccce9d57671a25
