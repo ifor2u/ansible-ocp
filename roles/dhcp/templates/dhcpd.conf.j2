@@ -67,7 +67,7 @@ subnet {{ nic1_network }}.0 netmask 255.255.255.0 {
 
 host {{ bootstrap_node01 }}-nic1 { hardware ethernet {{ bootstrap_node01_nic1_mac }}; fixed-address {{ bootstrap_node01_nic1_ip4 }}; option host-name "{{ bootstrap_node01 }}"; }
 host {{ master_node01 }}-nic1 { hardware ethernet {{ master_node01_nic1_mac }}; fixed-address {{ master_node01_nic1_ip4 }}; option host-name "{{ master_node01 }}"; }
-host {{ master_node02 }}-nic1 { hardware ethernet {{ master_node01_nic2_mac }}; fixed-address {{ master_node02_nic1_ip4 }}; option host-name "{{ master_node02 }}"; }
+host {{ master_node02 }}-nic1 { hardware ethernet {{ master_node02_nic1_mac }}; fixed-address {{ master_node02_nic1_ip4 }}; option host-name "{{ master_node02 }}"; }
 host {{ master_node03 }}-nic1 { hardware ethernet {{ master_node03_nic1_mac }}; fixed-address {{ master_node03_nic1_ip4 }}; option host-name "{{ master_node03 }}"; }
 host {{ worker_node01 }}-nic1 { hardware ethernet {{ worker_node01_nic1_mac }}; fixed-address {{ worker_node01_nic1_ip4 }}; option host-name "{{ worker_node01 }}"; }
 host {{ worker_node02 }}-nic1 { hardware ethernet {{ worker_node02_nic1_mac }}; fixed-address {{ worker_node02_nic1_ip4 }}; option host-name "{{ worker_node02 }}"; }
